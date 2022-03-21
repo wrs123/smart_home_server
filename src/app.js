@@ -1,5 +1,14 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8091 });
+
+
+
+const Tools  = require('./utils/tools');
+const { SERVER_PORT , WS_PORT}  = require('./config/config.default');
+const app = require('./app/index');
+
+const wss = new WebSocket.Server({ port: WS_PORT });
+const tools = new Tools();
+
 
 let users = {};
 let online = 0;
@@ -16,27 +25,20 @@ wss.broadcast = function broadcast(ws) {
     });
 };
 
-function binaryToStr(str){
-  var result = [];
-  var list = str.split(" ");
-  for(var i=0;i<list.length;i++){
-       var item = list[i];
-       var asciiCode = parseInt(item,2);
-       var charValue = String.fromCharCode(asciiCode);
-       result.push(charValue);
-  }
-  return result.join("");
-}
+
 
 //socket初始化
 wss.on('connection', (ws, req) =>{
 
-  online =wss._server._connections;
+  online = wss._server._connections;
   console.log('当前在线' + online+'个连接');
 
     let i = req.url;
     users[i] = ws
     console.log(i)
+
+
+
 
   ws.on('open', function open() {
     console.log("online")
@@ -101,5 +103,14 @@ wss.on('connection', (ws, req) =>{
   })
  
 });
+
+
+
+
+
+
+app.listen(SERVER_PORT, () => {
+  console.log("server started on http://localhost:8081");
+})
 
 
