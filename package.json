@@ -1,7 +1,13 @@
 {
   "dependencies": {
     "koa": "^2.13.4",
-    "ws": "^8.5.0"
+    "koa-passport": "^4.1.4",
+    "koa-session": "^5.13.1",
+    "ws": "^8.5.0",
+    "dotenv": "^16.0.0",
+    "koa-body": "^5.0.0",
+    "sequelize": "^6.19.0",
+    "mysql2": "^2.3.3"
   },
   "name": "node",
   "version": "1.0.0",

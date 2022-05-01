@@ -1,7 +1,4 @@
 const WebSocket = require('ws');
-
-
-
 const Tools  = require('./utils/tools');
 const { SERVER_PORT , WS_PORT}  = require('./config/config.default');
 const app = require('./app/index');
@@ -103,9 +100,6 @@ wss.on('connection', (ws, req) =>{
   })
  
 });
-
-
-
 
 
 

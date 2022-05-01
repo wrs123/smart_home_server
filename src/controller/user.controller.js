@@ -1,4 +1,4 @@
-const { createUser } = require('../model/user.model');
+ const { findUserByName } = require('../service/user.service');
 
 class UserController{
 
@@ -9,7 +9,13 @@ class UserController{
     }
    
     async login(ctx, next){
-        ctx.body = '登录';
+        const {name, password} = ctx.request.body;
+        const res = await findUserByName(name, password);
+        if(res.code === 200){
+            ctx.session.name = name
+        }
+        // console.log(ctx.session.name);
+        ctx.body = res;
     }
 }
 
