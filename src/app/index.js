@@ -4,6 +4,7 @@ const mainRouter = require('../router/main.route');
 const userRouter = require('../router/user.route');
 const passport = require('koa-passport');
 const session = require('koa-session')
+const BaseResult = require('../models/baseResult.model');
 
 const app = new Koa();
 app.keys = ['ofg']
@@ -11,7 +12,7 @@ const conf = {
 //   encode: json => JSON.stringify(json),
 //   decode: str => JSON.parse(str),
     key: 'koa.sess', /** 默认 */
-    maxAge: 100000,// 过期时间
+    maxAge: 1500000000,// 过期时间
     overwrite: true, /** 可以重写吗 */
     httpOnly: true, /** 仅仅是服务器端能访问 */
     rolling: false, /** 每次访问都更新session */
@@ -26,8 +27,8 @@ const allowpage = ['/user/login']
 
 //拦截
 async function localFilter (ctx, next){
-    let url = ctx.originalUrl
-    console.log(ctx.originalUrl)
+    let url = ctx.originalUrl.split('?')[0]
+    console.log(url)
     if (allowpage.indexOf(url) > -1) {
         console.log('zhijie')
         await next();
@@ -35,7 +36,7 @@ async function localFilter (ctx, next){
         const userName = ctx.session.name
         console.log(ctx.session.name)
         if(!userName){
-            ctx.body = "未登录"
+            ctx.body = new BaseResult({message: '未登录'})
         }else{
             await next();
         }

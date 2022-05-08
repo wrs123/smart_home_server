@@ -55,10 +55,13 @@ wss.on('connection', (ws, req) =>{
         console.log("-----接收心跳-----")
         break
       case 'normal':
-        if(users.hasOwnProperty(obj['to'])){
-          console.log("from: "+i)
+        let key = i.split("?")[1],
+            toPath = obj['to']+"?"+key;
+        if(users.hasOwnProperty(toPath)){
+          console.log("from: "+i);
+          
           console.log(obj)
-          users[obj['to']].send(JSON.stringify(obj));
+          users[toPath].send(JSON.stringify(obj));
            return true
         }
         console.log(obj)
