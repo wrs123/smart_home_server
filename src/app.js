@@ -50,37 +50,58 @@ wss.on('connection', (ws, req) =>{
   ws.on('message', async (jsonStr,flags) => {
     let obj = eval('(' + jsonStr + ')')
 
-    switch(obj['type']){
-      case 'heartbeat': 
-        console.log("-----接收心跳-----")
-        break
-      case 'normal':
-        let key = i.split("?")[1],
-            toPath = obj['to']+"?"+key;
-        if(users.hasOwnProperty(toPath)){
-          console.log("from: "+i);
+    if(obj['type'] != 2){
+      let key = i.split("?")[1],
+          toPath = obj['to']+"?"+key;
+      if(users.hasOwnProperty(toPath)){
+        console.log("from: "+i);
+        
+        console.log(obj)
+        users[toPath].send(JSON.stringify(obj));
+        return true
+      }
+      // console.log(obj)
+      // console.log(obj['to']+' 未上线,发送失败')
+    }else{
+      console.log("-----接收心跳-----")
+    }
+
+    // switch(obj['type']){
+    //   case 2: 
+    //     console.log("-----接收心跳-----")
+    //     break
+    //   case 0:{
+    //     let key = i.split("?")[1],
+    //         toPath = obj['to']+"?"+key;
+    //     if(users.hasOwnProperty(toPath)){
+    //       console.log("from: "+i);
           
-          console.log(obj)
-          users[toPath].send(JSON.stringify(obj));
-           return true
-        }
-        console.log(obj)
-        console.log(obj['to']+' 未上线,发送失败')
-        break
-      case 'ctr':
-        if(users.hasOwnProperty(obj['to'])){
-          console.log("from: "+i)
-          console.log(obj)
-          users[obj['to']].send(JSON.stringify(obj));
-           return true
-        }
-        console.log(obj)
-        console.log(obj['to']+' 未上线,发送失败')
-        break
-      default:
+    //       console.log(obj)
+    //       users[toPath].send(JSON.stringify(obj));
+    //        return true
+    //     }
+    //     // console.log(obj)
+    //     console.log(obj['to']+' 未上线,发送失败')
+    //     break
+    //   }
+    //   case 1:{
+    //     let key = i.split("?")[1],
+    //         toPath = obj['to']+"?"+key;
+
+    //     if(users.hasOwnProperty(toPath)){
+    //       console.log("from: "+i)
+    //       console.log(obj)
+    //       users[toPath].send(JSON.stringify(obj));
+    //        return true
+    //     }
+    //     console.log(obj)
+    //     console.log(obj['to']+' 未上线,发送失败')
+    //     break
+    //   }
+    //   default:
         
       
-    }
+    // }
 
   
 
