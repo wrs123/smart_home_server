@@ -25,14 +25,6 @@ const SysUser = sequelize.define('sys_user', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  type: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  phone: {
-    type: DataTypes.BIGINT,
-    allowNull: true
-  },
   password: {
     type: DataTypes.STRING(255),
     allowNull: true

@@ -22,7 +22,7 @@ const conf = {
 
 
 //定义允许直接访问的url
-const allowpage = ['/user/login']
+const allowpage = ['/user/login', '/user/register']
 
 
 //拦截
